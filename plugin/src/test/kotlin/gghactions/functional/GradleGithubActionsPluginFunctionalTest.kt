@@ -1,4 +1,4 @@
-package gghactions
+package gghactions.functional
 
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.string.shouldContain
