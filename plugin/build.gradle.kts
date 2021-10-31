@@ -72,3 +72,8 @@ tasks.jacocoTestCoverageVerification {
         org.apache.tools.ant.taskdefs.condition.Os.FAMILY_WINDOWS
     )
 }
+
+detekt {
+    buildUponDefaultConfig = true // preconfigure defaults
+    config = files(File(projectDir, "config/detekt.yml"))
+}
