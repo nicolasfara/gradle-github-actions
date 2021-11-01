@@ -2,8 +2,8 @@ package gghactions.functional
 
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.string.shouldContain
-import java.io.File
 import org.gradle.testkit.runner.GradleRunner
+import java.io.File
 
 /**
  * A simple functional test for the 'gghactions.greeting' plugin.
@@ -14,11 +14,13 @@ class GradleGithubActionsPluginFunctionalTest : WordSpec({
         // Setup the test build
         projectDir.mkdirs()
         projectDir.resolve("settings.gradle").writeText("")
-        projectDir.resolve("build.gradle").writeText("""
-            plugins {
-                id('gghactions.greeting')
-            }
-        """)
+        projectDir.resolve("build.gradle").writeText(
+            """
+                plugins {
+                    id('gghactions.greeting')
+                }
+            """
+        )
     }
 
     "The apply of the plugin" should {
