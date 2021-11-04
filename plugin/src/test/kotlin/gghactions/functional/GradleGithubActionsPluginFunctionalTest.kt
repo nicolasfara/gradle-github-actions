@@ -17,9 +17,9 @@ class GradleGithubActionsPluginFunctionalTest : WordSpec({
         projectDir.resolve("build.gradle").writeText(
             """
                 plugins {
-                    id('gghactions.greeting')
+                    id('gradle-github-actions')
                 }
-            """
+            """.trimIndent()
         )
     }
 
@@ -30,12 +30,12 @@ class GradleGithubActionsPluginFunctionalTest : WordSpec({
             val runner = GradleRunner.create()
             runner.forwardOutput()
             runner.withPluginClasspath()
-            runner.withArguments("greeting")
+            runner.withArguments("githubWorkflowGenerate")
             runner.withProjectDir(projectDir)
             val result = runner.build()
 
             // Verify the result
-            result.output shouldContain "Hello from plugin 'gghactions.greeting'"
+            result.output shouldContain "action"
         }
     }
 })
