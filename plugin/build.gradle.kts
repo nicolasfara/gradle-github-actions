@@ -40,8 +40,8 @@ dependencies {
 
 gradlePlugin {
     // Define the plugin
-    val greeting by plugins.creating {
-        id = "gghactions.greeting"
+    val plugin by plugins.creating {
+        id = "gradle-github-actions"
         implementationClass = "gghactions.GradleGithubActionsPlugin"
     }
 }
