@@ -19,6 +19,13 @@ class GradleGithubActionsPluginFunctionalTest : WordSpec({
                 plugins {
                     id('gradle-github-actions')
                 }
+                
+                githubWorkflow {
+                    steps {
+                        gradle {
+                        }
+                    }
+                }
             """.trimIndent()
         )
     }
