@@ -42,7 +42,7 @@ gradlePlugin {
     // Define the plugin
     val plugin by plugins.creating {
         id = "gradle-github-actions"
-        implementationClass = "gghactions.GradleGithubActionsPlugin"
+        implementationClass = "gghactions.GithubActionsPlugin"
     }
 }
 

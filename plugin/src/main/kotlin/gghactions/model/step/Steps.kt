@@ -27,9 +27,9 @@ abstract class Steps : Element {
 
 class WorkflowSteps : Steps() {
     fun action(actionName: String) {
-        steps += ActionStep(actionName)
+        steps += ActionStepOld(actionName)
     }
-    fun action(actionName: String, init: ActionStep.() -> Unit) = initStep(ActionStep(actionName), init)
+    fun action(actionName: String, init: ActionStepOld.() -> Unit) = initStep(ActionStepOld(actionName), init)
     fun gradle(init: GradleCommand.() -> Unit) = initStep(GradleCommand(), init)
     fun command(init: Command.() -> Unit) = initStep(Command(), init)
 }

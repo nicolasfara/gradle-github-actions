@@ -1,10 +1,12 @@
 package gghactions.model.step
 
-class GradleCommand : Step() {
+import javax.inject.Inject
+
+open class GradleCommand : Step() {
     var tasks = arrayListOf<String>()
     override var command = "run: ./gradlew ${tasks.joinToString(" ")}"
 }
-class Command : Step() {
+open class Command @Inject constructor() : Step() {
     var run: String = ""
     override var command = "run: $run"
 }

@@ -1,5 +1,5 @@
 package gghactions.model.step
 
-class ActionStep(actionName: String) : Step() {
+class ActionStepOld(actionName: String) : Step() {
     override var command = "uses: $actionName"
 }
