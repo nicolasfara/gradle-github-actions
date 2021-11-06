@@ -21,6 +21,7 @@ class Build(project: Project) {
 
     fun gradle(config: GradleStep.() -> Unit) = genericStep(config)
     fun cli(config: CliStep.() -> Unit) = genericStep(config)
+    fun action(config: ActionStep.() -> Unit) = genericStep(config)
 
     private inline fun <reified T : Step> genericStep(config: T.() -> Unit) {
         val step = T::class.java.getDeclaredConstructor().newInstance()
@@ -30,12 +31,12 @@ class Build(project: Project) {
 }
 
 interface Step {
-    var name: String?
+    var name: String
     var env: Map<String, String>
 }
 
 class GradleStep : Step {
-    override var name: String? = null
+    override var name: String = ""
     override var env: Map<String, String> = emptyMap()
     var tasks: List<String> = emptyList()
 
@@ -49,7 +50,13 @@ class GradleStep : Step {
 }
 
 class CliStep : Step {
-    override var name: String? = null
+    override var name: String = ""
     override var env: Map<String, String> = emptyMap()
     var run: String = ""
+}
+
+class ActionStep : Step {
+    override var name: String = ""
+    override var env: Map<String, String> = emptyMap()
+    var actionName: String = ""
 }
