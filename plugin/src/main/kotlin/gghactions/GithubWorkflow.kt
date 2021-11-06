@@ -16,10 +16,15 @@ class GithubWorkflow(project: Project) {
 }
 
 class Build(project: Project) {
-    val steps: ListProperty<Step> = project.objects.listProperty(Step::class.java).apply { convention(emptyList()) }
+    val steps: ListProperty<Step> = project.objects.listProperty(Step::class.java)
+        .apply { convention(emptyList()) }
 
-    fun gradle(config: GradleStep.() -> Unit) {
-        val step = GradleStep().apply(config)
+    fun gradle(config: GradleStep.() -> Unit) = genericStep(config)
+    fun cli(config: CliStep.() -> Unit) = genericStep(config)
+
+    private inline fun <reified T : Step> genericStep(config: T.() -> Unit) {
+        val step = T::class.java.getDeclaredConstructor().newInstance()
+            .apply(config)
         steps.set(steps.get() + step)
     }
 }

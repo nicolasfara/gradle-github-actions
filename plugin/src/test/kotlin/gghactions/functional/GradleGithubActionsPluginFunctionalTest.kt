@@ -13,16 +13,18 @@ class GradleGithubActionsPluginFunctionalTest : WordSpec({
     fun setupTest() {
         // Setup the test build
         projectDir.mkdirs()
-        projectDir.resolve("settings.gradle").writeText("")
-        projectDir.resolve("build.gradle").writeText(
+        projectDir.resolve("settings.gradle.kts").writeText("")
+        projectDir.resolve("build.gradle.kts").writeText(
             """
                 plugins {
-                    id('gradle-github-actions')
+                    id("gradle-github-actions")
                 }
                 
                 githubWorkflow {
-                    steps {
+                    build {
                         gradle {
+                            name = "Some name"
+                            tasks = listOf("test", "check")
                         }
                     }
                 }
@@ -42,7 +44,7 @@ class GradleGithubActionsPluginFunctionalTest : WordSpec({
             val result = runner.build()
 
             // Verify the result
-            result.output shouldContain "action"
+            result.output shouldContain "test"
         }
     }
 })
