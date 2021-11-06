@@ -31,11 +31,29 @@ class Build(project: Project) {
     }
 }
 
+/**
+ * Interface for a single step of the workflow.
+ */
 interface Step {
     var name: String
     var env: Map<String, String>
 }
 
+/**
+ * Represent a list of gradle commands in the workflow.
+ *
+ * ```kotlin
+ * githubWorkflow {
+ *     build {
+ *         gradle {
+ *             name = "Test and check"
+ *             tasks = listOf("test", "check")
+ *         }
+ *         ...
+ *     }
+ * }
+ * ```
+ */
 class GradleStep : Step {
     override var name: String = ""
     override var env: Map<String, String> = emptyMap()
@@ -50,12 +68,40 @@ class GradleStep : Step {
     }
 }
 
+/**
+ * Represent a CLI command in the workflow.
+ *
+ * ```kotlin
+ * githubWorkflow {
+ *     build {
+ *         cli {
+ *             name = "Echo an hello world"
+ *             run = "echo hello world"
+ *         }
+ *     }
+ * }
+ * ```
+ */
 class CliStep : Step {
     override var name: String = ""
     override var env: Map<String, String> = emptyMap()
     var run: String = ""
 }
 
+/**
+ * Represent the use of an action in the workflow.
+ *
+ * ```kotlin
+ * githubWorkflow {
+ *     build {
+ *         action {
+ *             actionName = "actions/cache@v2"
+ *             env = mapOf("foo" to "bar")
+ *         }
+ *     }
+ * }
+ * ```
+ */
 class ActionStep : Step {
     override var name: String = ""
     override var env: Map<String, String> = emptyMap()
