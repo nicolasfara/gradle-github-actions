@@ -13,6 +13,7 @@ private inline fun <reified T> Project.property(): Property<T> =
 class GithubWorkflow(project: Project) {
     val name: Property<String> = project.propertyWithDefault("Continuous Integration")
     val build: Property<Build> = project.property()
+    val publish: Property<Build> = project.property()
 }
 
 class Build(project: Project) {
