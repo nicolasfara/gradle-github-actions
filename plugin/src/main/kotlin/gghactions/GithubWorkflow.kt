@@ -11,12 +11,14 @@ private inline fun <reified T> Project.property(): Property<T> =
     objects.property(T::class.java)
 
 class GithubWorkflow(project: Project) {
+    val targetBranch: ListProperty<String> = project.objects.listProperty(String::class.java)
     val name: Property<String> = project.propertyWithDefault("Continuous Integration")
     val build: Property<Build> = project.property()
     val publish: Property<Build> = project.property()
 }
 
 class Build(project: Project) {
+    var name: String = ""
     val steps: ListProperty<Step> = project.objects.listProperty(Step::class.java)
         .apply { convention(emptyList()) }
 
@@ -37,6 +39,7 @@ class Build(project: Project) {
 interface Step {
     var name: String
     var env: Map<String, String>
+    var condition: String?
 }
 
 /**
@@ -49,7 +52,6 @@ interface Step {
  *             name = "Test and check"
  *             tasks = listOf("test", "check")
  *         }
- *         ...
  *     }
  * }
  * ```
@@ -57,6 +59,7 @@ interface Step {
 class GradleStep : Step {
     override var name: String = ""
     override var env: Map<String, String> = emptyMap()
+    override var condition: String? = null
     var tasks: List<String> = emptyList()
 
     override fun toString(): String {
@@ -85,6 +88,7 @@ class GradleStep : Step {
 class CliStep : Step {
     override var name: String = ""
     override var env: Map<String, String> = emptyMap()
+    override var condition: String? = null
     var run: String = ""
 }
 
@@ -105,5 +109,6 @@ class CliStep : Step {
 class ActionStep : Step {
     override var name: String = ""
     override var env: Map<String, String> = emptyMap()
+    override var condition: String? = null
     var actionName: String = ""
 }

@@ -22,6 +22,7 @@ class GradleGithubActionsPluginFunctionalTest : WordSpec({
                 
                 githubWorkflow {
                     build {
+                        name = "Build, test and check"
                         gradle {
                             name = "Some name"
                             tasks = listOf("test", "check")
