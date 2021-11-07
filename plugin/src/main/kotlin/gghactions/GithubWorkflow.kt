@@ -11,12 +11,14 @@ private inline fun <reified T> Project.property(): Property<T> =
     objects.property(T::class.java)
 
 class GithubWorkflow(project: Project) {
+    val targetBranch: ListProperty<String> = project.objects.listProperty(String::class.java)
     val name: Property<String> = project.propertyWithDefault("Continuous Integration")
     val build: Property<Build> = project.property()
     val publish: Property<Build> = project.property()
 }
 
 class Build(project: Project) {
+    var name: String = ""
     val steps: ListProperty<Step> = project.objects.listProperty(Step::class.java)
         .apply { convention(emptyList()) }
 
@@ -36,13 +38,8 @@ class Build(project: Project) {
  */
 interface Step {
     var name: String
-    var env: Map<String, String>?
+    var env: Map<String, String>
     var condition: String?
-}
-
-private fun printMap(map: Map<String, String>, name: String, sb: StringBuilder) {
-    sb.appendLine("  $name:")
-    map.forEach { (k, v) -> sb.appendLine("    $k: $v") }
 }
 
 /**
@@ -55,24 +52,22 @@ private fun printMap(map: Map<String, String>, name: String, sb: StringBuilder) 
  *             name = "Test and check"
  *             tasks = listOf("test", "check")
  *         }
- *         ...
  *     }
  * }
  * ```
  */
 class GradleStep : Step {
-    override lateinit var name: String
-    override var env: Map<String, String>? = null
+    override var name: String = ""
+    override var env: Map<String, String> = emptyMap()
     override var condition: String? = null
-    lateinit var tasks: List<String>
+    var tasks: List<String> = emptyList()
 
     override fun toString(): String {
-        val stringBuilder = StringBuilder()
-        stringBuilder.appendLine("- name: $name")
-        condition?.let { stringBuilder.appendLine("  if: $it") }
-        stringBuilder.appendLine("  run: ./gradlew ${tasks.joinToString(" ")}")
-        env?.let { printMap(it, "env", stringBuilder) }
-        return stringBuilder.toString()
+        return """
+            - name: $name
+              run: ./gradlew ${tasks.joinToString(" ")}
+              env: $env
+        """.trimIndent()
     }
 }
 
@@ -91,19 +86,9 @@ class GradleStep : Step {
  * ```
  */
 class CliStep : Step {
-    override lateinit var name: String
-    override var env: Map<String, String>? = null
-    override var condition: String? = null
-    lateinit var run: String
-
-    override fun toString(): String {
-        val stringBuilder = StringBuilder()
-        stringBuilder.append("- name: $name")
-        condition?.let { stringBuilder.append("  if: $it") }
-        stringBuilder.append("  run: $run")
-        env?.let { printMap(it, "env", stringBuilder) }
-        return stringBuilder.toString()
-    }
+    override var name: String = ""
+    override var env: Map<String, String> = emptyMap()
+    var run: String = ""
 }
 
 /**
@@ -121,19 +106,7 @@ class CliStep : Step {
  * ```
  */
 class ActionStep : Step {
-    override lateinit var name: String
-    override var env: Map<String, String>? = null
-    override var condition: String? = null
-    lateinit var actionName: String
-    var with: Map<String, String>? = null
-
-    override fun toString(): String {
-        val stringBuilder = StringBuilder()
-        stringBuilder.append("- name: $name")
-        condition?.let { stringBuilder.append("  if: $it") }
-        stringBuilder.append("  uses: $actionName")
-        env?.let { printMap(it, "env", stringBuilder) }
-        with?.let { printMap(it, "with", stringBuilder) }
-        return stringBuilder.toString()
-    }
+    override var name: String = ""
+    override var env: Map<String, String> = emptyMap()
+    var actionName: String = ""
 }
