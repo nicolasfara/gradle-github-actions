@@ -33,31 +33,61 @@ class Build(project: Project) {
 
 interface Step {
     var name: String
-    var env: Map<String, String>
+    var env: Map<String, String>?
+    var condition: String?
+}
+
+private fun printMap(map: Map<String, String>, name: String, sb: StringBuilder) {
+    sb.appendLine("  $name:")
+    map.forEach { (k, v) -> sb.appendLine("    $k: $v") }
 }
 
 class GradleStep : Step {
-    override var name: String = ""
-    override var env: Map<String, String> = emptyMap()
-    var tasks: List<String> = emptyList()
+    override lateinit var name: String
+    override var env: Map<String, String>? = null
+    override var condition: String? = null
+    lateinit var tasks: List<String>
 
     override fun toString(): String {
-        return """
-            - name: $name
-              run: ./gradlew ${tasks.joinToString(" ")}
-              env: $env
-        """.trimIndent()
+        val stringBuilder = StringBuilder()
+        stringBuilder.appendLine("- name: $name")
+        condition?.let { stringBuilder.appendLine("  if: $it") }
+        stringBuilder.appendLine("  run: ./gradlew ${tasks.joinToString(" ")}")
+        env?.let { printMap(it, "env", stringBuilder) }
+        return stringBuilder.toString()
     }
 }
 
 class CliStep : Step {
-    override var name: String = ""
-    override var env: Map<String, String> = emptyMap()
-    var run: String = ""
+    override lateinit var name: String
+    override var env: Map<String, String>? = null
+    override var condition: String? = null
+    lateinit var run: String
+
+    override fun toString(): String {
+        val stringBuilder = StringBuilder()
+        stringBuilder.append("- name: $name")
+        condition?.let { stringBuilder.append("  if: $it") }
+        stringBuilder.append("  run: $run")
+        env?.let { printMap(it, "env", stringBuilder) }
+        return stringBuilder.toString()
+    }
 }
 
 class ActionStep : Step {
-    override var name: String = ""
-    override var env: Map<String, String> = emptyMap()
-    var actionName: String = ""
+    override lateinit var name: String
+    override var env: Map<String, String>? = null
+    override var condition: String? = null
+    lateinit var actionName: String
+    var with: Map<String, String>? = null
+
+    override fun toString(): String {
+        val stringBuilder = StringBuilder()
+        stringBuilder.append("- name: $name")
+        condition?.let { stringBuilder.append("  if: $it") }
+        stringBuilder.append("  uses: $actionName")
+        env?.let { printMap(it, "env", stringBuilder) }
+        with?.let { printMap(it, "with", stringBuilder) }
+        return stringBuilder.toString()
+    }
 }
