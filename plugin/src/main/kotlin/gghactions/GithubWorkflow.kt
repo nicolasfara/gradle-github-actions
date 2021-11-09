@@ -11,12 +11,14 @@ private inline fun <reified T> Project.property(): Property<T> =
     objects.property(T::class.java)
 
 class GithubWorkflow(project: Project) {
+    val targetBranch: ListProperty<String> = project.objects.listProperty(String::class.java)
     val name: Property<String> = project.propertyWithDefault("Continuous Integration")
     val build: Property<Build> = project.property()
     val publish: Property<Build> = project.property()
 }
 
 class Build(project: Project) {
+    var name: String = ""
     val steps: ListProperty<Step> = project.objects.listProperty(Step::class.java)
         .apply { convention(emptyList()) }
 
@@ -31,6 +33,9 @@ class Build(project: Project) {
     }
 }
 
+/**
+ * Interface for a single step of the workflow.
+ */
 interface Step {
     var name: String
     var env: Map<String, String>?
@@ -42,6 +47,20 @@ private fun printMap(map: Map<String, String>, name: String, sb: StringBuilder) 
     map.forEach { (k, v) -> sb.appendLine("    $k: $v") }
 }
 
+/**
+ * Represent a list of gradle commands in the workflow.
+ *
+ * ```kotlin
+ * githubWorkflow {
+ *     build {
+ *         gradle {
+ *             name = "Test and check"
+ *             tasks = listOf("test", "check")
+ *         }
+ *     }
+ * }
+ * ```
+ */
 class GradleStep : Step {
     override lateinit var name: String
     override var env: Map<String, String>? = null
@@ -58,6 +77,20 @@ class GradleStep : Step {
     }
 }
 
+/**
+ * Represent a CLI command in the workflow.
+ *
+ * ```kotlin
+ * githubWorkflow {
+ *     build {
+ *         cli {
+ *             name = "Echo an hello world"
+ *             run = "echo hello world"
+ *         }
+ *     }
+ * }
+ * ```
+ */
 class CliStep : Step {
     override lateinit var name: String
     override var env: Map<String, String>? = null
@@ -74,6 +107,20 @@ class CliStep : Step {
     }
 }
 
+/**
+ * Represent the use of an action in the workflow.
+ *
+ * ```kotlin
+ * githubWorkflow {
+ *     build {
+ *         action {
+ *             actionName = "actions/cache@v2"
+ *             env = mapOf("foo" to "bar")
+ *         }
+ *     }
+ * }
+ * ```
+ */
 class ActionStep : Step {
     override lateinit var name: String
     override var env: Map<String, String>? = null
