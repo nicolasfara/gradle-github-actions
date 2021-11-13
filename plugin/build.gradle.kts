@@ -5,6 +5,7 @@ plugins {
 
     // Apply the Kotlin JVM plugin to add support for Kotlin.
     kotlin("jvm") version "1.5.31"
+    kotlin("plugin.serialization") version "1.5.31"
 
     // Other plugins
     id("com.gradle.plugin-publish") version "0.16.0"
@@ -32,6 +33,7 @@ repositories {
 val kotestVersion = "5.0.0.M3"
 
 dependencies {
+    implementation("com.charleskorn.kaml:kaml:0.36.0")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion") // for kotest framework
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion") // for kotest core assertions
     testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion") // for kotest core jvm assertions
