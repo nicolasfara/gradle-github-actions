@@ -37,12 +37,12 @@ class GradleGithubActionsPluginFunctionalTest : WordSpec({
         "greet" {
             setupTest()
             // Run the build
-            val runner = GradleRunner.create()
-            runner.forwardOutput()
-            runner.withPluginClasspath()
-            runner.withArguments("githubWorkflowGenerate")
-            runner.withProjectDir(projectDir)
-            val result = runner.build()
+            val result = GradleRunner.create()
+                .forwardOutput()
+                .withPluginClasspath()
+                .withArguments("githubWorkflowGenerate")
+                .withProjectDir(projectDir)
+                .build()
 
             // Verify the result
             result.output shouldContain "test"
