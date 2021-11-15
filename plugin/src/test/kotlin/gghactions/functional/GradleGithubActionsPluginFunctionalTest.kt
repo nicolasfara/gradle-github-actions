@@ -16,16 +16,21 @@ class GradleGithubActionsPluginFunctionalTest : WordSpec({
         projectDir.resolve("settings.gradle.kts").writeText("")
         projectDir.resolve("build.gradle.kts").writeText(
             """
+                import gghactions.model.github.Gradle
+                import gghactions.model.github.Cli
+                
                 plugins {
                     id("gradle-github-actions")
                 }
                 
                 githubWorkflow {
+                    on = listOf("push", "pull_request")
                     build {
-                        gradle {
-                            name = "Some name"
-                            tasks = listOf("test", "check")
-                        }
+                        name = "Build, test and check"
+                        steps = listOf(
+                            Gradle(name = "Check", tasks = listOf("check")),
+                            Cli(name = "Echo", run = "echo hello world")
+                        )
                     }
                 }
             """.trimIndent()
