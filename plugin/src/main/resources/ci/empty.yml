@@ -1,0 +1,6 @@
+name: {{ name }}
+
+jobs:
+  {% for item in jobList -%}
+    - name: {{ item.name }}
+  {% end %}
