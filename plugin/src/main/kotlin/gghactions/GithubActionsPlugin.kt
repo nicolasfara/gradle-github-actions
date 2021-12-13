@@ -30,7 +30,7 @@ class GithubActionsPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         val extension = project.createExtension<GithubActionsExtension>(EXTENSION_NAME, project)
-        // Register a task
+
         project.registerTask<GithubActionsTask>("githubWorkflowGenerate").run {
             workflow.set(extension.workflowConfiguration)
         }
