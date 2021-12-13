@@ -1,7 +1,6 @@
 package gghactions
 
-import gghactions.model.github.Job
-import gghactions.model.github.Workflow
+import gghactions.model.*
 import org.gradle.api.Project
 
 /**
@@ -10,32 +9,22 @@ import org.gradle.api.Project
  */
 open class GithubActionsExtension(private val project: Project) {
 
-    internal val workflowConfiguration: Workflow = Workflow(name = "Continuous Integration", on = emptyList(), jobs = emptyList())
+    internal val workflowConfiguration: Workflow = Workflow(
+        name = "Test",
+        on = mapOf(
+            "push" to mapOf("tags" to "*", "branches-ignore" to listOf("renovate/**", "renovate/**")),
+            "pull_request" to "",
+            "workflow_dispatch" to ""
+        ),
+        jobs = Job(
+            build = JobId(
+                runsOn = listOf("ubuntu-latest"),
+                steps = listOf(
+                    Cli(name = "Compile", run = "./gradlew check"),
+                    Action(name = "Some action", uses = "foo/bar@v2", with = mapOf("FOO" to "bar"))
+                )
+            )
+        )
+    )
 
-    /**
-     * The name of the CI workflow.
-     */
-    var name: String
-        get() = workflowConfiguration.name
-        set(value) { workflowConfiguration.name = value }
-
-    var on: List<String>
-        get() = workflowConfiguration.on
-        set(value) { workflowConfiguration.on = value }
-
-    /**
-     * [config] is the trailing lambda for creating a build object.
-     */
-    fun build(config: Job.() -> Unit = { }) {
-        val buildJob = Job(name = "Build check and test").apply(config)
-        workflowConfiguration.jobs += buildJob
-    }
-
-    /**
-     * [config] is the trailing lambda for creating the publish step.
-     */
-    fun publish(config: Job.() -> Unit = { }) {
-        val publishJob = Job(name = "Publish").apply(config)
-        workflowConfiguration.jobs += publishJob
-    }
 }
