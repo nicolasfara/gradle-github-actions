@@ -8,4 +8,3 @@
  */
 
 rootProject.name = "gradle-github-actions"
-include("plugin")

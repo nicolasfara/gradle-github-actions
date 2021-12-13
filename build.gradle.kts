@@ -79,5 +79,5 @@ tasks.jacocoTestCoverageVerification {
 
 detekt {
     buildUponDefaultConfig = true // preconfigure defaults
-    config = files(File(projectDir, "config/detekt.yml"))
+    config = files("./detekt.yml")
 }

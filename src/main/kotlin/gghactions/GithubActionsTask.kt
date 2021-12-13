@@ -38,7 +38,6 @@ open class GithubActionsTask : DefaultTask() {
     fun doAction() {
         mapper.registerModule(
             KotlinModule.Builder()
-                .withReflectionCacheSize(512)
                 .configure(KotlinFeature.NullToEmptyCollection, false)
                 .configure(KotlinFeature.NullToEmptyMap, false)
                 .configure(KotlinFeature.NullIsSameAsDefault, false)

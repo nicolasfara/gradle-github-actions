@@ -2,57 +2,44 @@ name: Build, Test and Publish
 
 on:
   pull_request:
-    branches: [master, develop]
+    branches: [ master, develop ]
   push:
-    branches: [master, develop]
-    tags: [v*]
+    branches: [ master, develop ]
+    tags: [ v* ]
 
 jobs:
   build:
     name: Build and Test
     runs-on: ubuntu-latest
     steps:
-    # Check out current repository
-    - name: Fetch Sources
-      uses: actions/checkout@v2
+      # Check out current repository
+      - name: Fetch Sources
+        uses: actions/checkout@v2
 
-    # Setup Java 1.8 environment for the next steps
-    - name: Setup Java
-      uses: actions/setup-java@v2
-      with:
-        distribution: 'adopt'
-        java-version: '11'
+      # Setup Java 1.8 environment for the next steps
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
 
-    - name: Cache Gradle packages
-      uses: actions/cache@v2
-      with:
-        key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-gradle-wrapper-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
 
-    # Lint check
-    - name: Linting checking
-      run: ./gradlew ktlintCheck
+      - name: Build project
+        run: ./gradlew build
 
-    # detekt
-    - name: Detekt
-      run: ./gradlew detekt
+      - name: Generate jacoco report
+        run: ./gradlew jacocoTestReport
 
-    # Build application
-    - name: Build
-      run: ./gradlew build
-
-    # Test application
-    - name: Test
-      run: ./gradlew test
-
-    - name: Generate jacoco report
-      run: ./gradlew jacocoTestReport
-
-    - uses: codecov/codecov-action@v2
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-        files: plugin/build/reports/jacoco/test/jacocoTestReport.xml
-        fail_ci_if_error: true # optional (default = false)
-        verbose: true # optional (default = false)
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files: plugin/build/reports/jacoco/test/jacocoTestReport.xml
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
