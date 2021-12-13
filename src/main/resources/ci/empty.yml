@@ -1,0 +1,44 @@
+#
+# ci.yml
+# Copyright (C) 2021 Nicolas Farabegoli <nicolas.farabegoli (at) gmail.com>
+#
+# Distributed under the MIT License (license terms are at http://opensource.org/licenses/MIT).
+#
+name: { { name } }
+
+on:
+  pull_request:
+    branches: { { branches } }
+  push:
+    branches: { { branches } }
+    tags: { { tagPattern } }
+
+env:
+  GITHUB_TOKEN: { { "${{ secrets.GITHUB_TOKEN " } } } }
+
+jobs:
+  build:
+    name: { { buildName } }
+    strategy:
+      matrix:
+        os: { { osList } }
+        java: { { javaList } }
+    runs-on: { { "${{ matrix.os " } } } }
+    steps:
+      { %- for step in steps % }
+      -                            name: { { step.name } }
+        { % if step.action % }     uses: { { step.action } }{ % endif % }
+        { % if step.condition % }  if: { { step.condition } }{ % endif % }
+        { % if step.with % }       with: { { step.with } }{ % endif % }
+        { % for variable in step.with % }
+        { { variable.first } }: { { variable.second } }{ % endfor % }
+        { % if step.env != null % }env: { % endif % }
+        { % for env in step.env % }
+        { { env.first } }: { { env.second } }{ % endfor % }
+        { % if step.run -% }       run: { { step.run } }{ % endif % }
+      { % endfor % }
+
+  { %- if publish % }
+  publish:
+  { % endif % }
+
