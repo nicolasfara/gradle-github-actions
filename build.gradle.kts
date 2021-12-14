@@ -5,7 +5,7 @@ plugins {
 
     // Apply the Kotlin JVM plugin to add support for Kotlin.
     kotlin("jvm") version "1.5.31"
-    kotlin("plugin.serialization") version "1.5.31"
+    kotlin("plugin.serialization") version "1.6.10"
 
     // Other plugins
     id("com.gradle.plugin-publish") version "0.16.0"
