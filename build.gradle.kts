@@ -39,7 +39,7 @@ dependencies {
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion") // for kotest framework
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion") // for kotest core assertions
     testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion") // for kotest core jvm assertions
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.18.1")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
 }
 
 gradlePlugin {
