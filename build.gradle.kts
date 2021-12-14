@@ -1,17 +1,16 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
     `java-gradle-plugin`
     jacoco
 
     // Apply the Kotlin JVM plugin to add support for Kotlin.
-    kotlin("jvm") version "1.6.10"
-    kotlin("plugin.serialization") version "1.6.10"
-
-    // Other plugins
-    id("com.gradle.plugin-publish") version "0.18.0"
-    id("pl.droidsonroids.jacoco.testkit") version "1.0.9"
-    id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
-    id("io.gitlab.arturbosch.detekt") version "1.19.0"
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.jacoco)
+    alias(libs.plugins.publish)
+    alias(libs.plugins.ktlint)
 }
 
 java {
@@ -30,16 +29,10 @@ repositories {
     mavenCentral()
 }
 
-val kotestVersion = "5.0.0.M3"
-
 dependencies {
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.0")
-    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion") // for kotest framework
-    testImplementation("io.kotest:kotest-assertions-core:$kotestVersion") // for kotest core assertions
-    testImplementation("io.kotest:kotest-assertions-core-jvm:$kotestVersion") // for kotest core jvm assertions
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
+    implementation(libs.bundles.jackson)
+    testImplementation(libs.bundles.kotest)
+    detektPlugins(libs.detekt)
 }
 
 gradlePlugin {
