@@ -8,7 +8,7 @@ plugins {
     kotlin("plugin.serialization") version "1.6.10"
 
     // Other plugins
-    id("com.gradle.plugin-publish") version "0.16.0"
+    id("com.gradle.plugin-publish") version "0.18.0"
     id("pl.droidsonroids.jacoco.testkit") version "1.0.9"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
     id("io.gitlab.arturbosch.detekt") version "1.19.0"
