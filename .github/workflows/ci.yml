@@ -48,6 +48,7 @@ jobs:
         run: ./gradlew jacocoTestReport
 
       - uses: codecov/codecov-action@v2
+        if: ${{ runner.os == 'Linux' }} && ${{ matrix.java-version == 17 }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: build/reports/jacoco/test/jacocoTestReport.xml
