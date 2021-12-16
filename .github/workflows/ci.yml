@@ -1,27 +1,37 @@
 name: Build, Test and Publish
 
 on:
-  pull_request:
-    branches: [ master, develop ]
   push:
-    branches: [ master, develop ]
-    tags: [ v* ]
+    tags: ['*']
+    branches-ignore:
+      - 'autodelivery**'
+      - 'bump-**'
+      - 'renovate/**'
+    paths-ignore:
+      - 'CHANGELOG.md'
+      - 'LICENSE'
+      - 'README.md'
+      - 'renovate.json'
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+        java-version: [11, 17]
     name: Build and Test
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     steps:
-      # Check out current repository
       - name: Fetch Sources
         uses: actions/checkout@v2
 
-      # Setup Java 1.8 environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
-          java-version: '11'
+          java-version: ${{ matrix.java-version }}
 
       - name: Cache Gradle packages
         uses: actions/cache@v2
@@ -43,3 +53,17 @@ jobs:
           files: build/reports/jacoco/test/jacocoTestReport.xml
           fail_ci_if_error: true
           verbose: true
+
+  release:
+    needs: [build]
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+    steps:
+      - name: Fetch Sources
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: 17
