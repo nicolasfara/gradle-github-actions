@@ -1,9 +1,6 @@
 package gghactions
 
-import gghactions.model.Action
-import gghactions.model.Cli
-import gghactions.model.Job
-import gghactions.model.JobId
+import gghactions.configuration.Steps
 import gghactions.model.Workflow
 import org.gradle.api.Project
 
@@ -13,21 +10,27 @@ import org.gradle.api.Project
  */
 open class GithubActionsExtension(private val project: Project) {
 
-    internal val workflowConfiguration: Workflow = Workflow(
-        name = "Test",
-        on = mapOf(
-            "push" to mapOf("tags" to "*", "branches-ignore" to listOf("renovate/**", "renovate/**")),
-            "pull_request" to project.name,
-            "workflow_dispatch" to ""
-        ),
-        jobs = Job(
-            build = JobId(
-                runsOn = listOf("ubuntu-latest"),
-                steps = listOf(
-                    Cli(name = "Compile", run = "./gradlew check", cond = "true == true"),
-                    Action(name = "Some action", uses = "foo/bar@v2", with = mapOf("FOO" to "bar"))
-                )
-            )
-        )
-    )
+    internal val workflow = Workflow.defaultConfig()
+
+    var name: String
+        get() = workflow.name
+        set(value) { workflow.name = value }
+
+    var on: Map<String, Any>
+        get() = workflow.on
+        set(value) { workflow.on = value }
+
+    var os: List<String>
+        get() = workflow.jobs.build.strategy.matrix["os"] as List<String>
+        set(value) { workflow.jobs.build.strategy.matrix["os"] = value }
+
+    var java: List<Int>
+        get() = workflow.jobs.build.strategy.matrix["java-version"] as List<Int>
+        set(value) { workflow.jobs.build.strategy.matrix["java-version"] = value }
+
+    fun build(config: Steps.() -> Unit) {
+        val steps = Steps()
+        steps.config()
+        workflow.jobs.build.steps += steps.userSteps
+    }
 }
