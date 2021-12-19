@@ -9,17 +9,17 @@ interface Step {
     /**
      * TODO.
      */
-    val name: String
+    var name: String
 
     /**
      * TODO.
      */
-    val cond: String?
+    var cond: String?
 
     /**
      * TODO.
      */
-    val env: Map<String, String>?
+    var env: Map<String, String>?
 }
 
 /**
@@ -28,12 +28,12 @@ interface Step {
  * [run] TODO.
  */
 data class Cli(
-    override val name: String,
+    override var name: String,
     @JsonProperty("if")
-    override val cond: String? = null,
-    override val env: Map<String, String>? = null,
-    val shell: String? = null,
-    val run: String
+    override var cond: String? = null,
+    override var env: Map<String, String>? = null,
+    var shell: String? = null,
+    var run: String
 ) : Step
 
 /**
@@ -42,10 +42,10 @@ data class Cli(
  * [with] TODO.
  */
 data class Action(
-    override val name: String,
+    override var name: String,
     @JsonProperty("if")
-    override val cond: String? = null,
-    override val env: Map<String, String>? = null,
-    val uses: String,
-    val with: Map<String, String>? = null
+    override var cond: String? = null,
+    override var env: Map<String, String>? = null,
+    var uses: String,
+    var with: Map<String, String>? = null
 ) : Step

@@ -6,6 +6,6 @@ package gghactions.model
  * [publish] TODO.
  */
 data class Job(
-    val build: JobId,
-    val publish: JobId? = null
+    var build: JobId,
+    var publish: JobId? = null
 )
