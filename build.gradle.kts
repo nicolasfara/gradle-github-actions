@@ -30,7 +30,7 @@ repositories {
     mavenCentral()
 }
 
-val kotestVersion = "5.0.0.M3"
+val kotestVersion = "5.0.3"
 
 dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
