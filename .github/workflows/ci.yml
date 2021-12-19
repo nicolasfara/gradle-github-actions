@@ -68,3 +68,8 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 17
+
+      - name: Publish
+        run: |
+          npm install
+          npx semantic-release
