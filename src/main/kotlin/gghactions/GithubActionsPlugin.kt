@@ -1,5 +1,7 @@
 package gghactions
 
+import gghactions.model.Job
+import gghactions.model.Workflow
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -32,7 +34,7 @@ class GithubActionsPlugin : Plugin<Project> {
         val extension = project.createExtension<GithubActionsExtension>(EXTENSION_NAME, project)
 
         project.registerTask<GithubActionsTask>("githubWorkflowGenerate").run {
-            workflow.set(extension.workflowConfiguration)
+            workflow.set(extension.workflow)
         }
     }
 }
