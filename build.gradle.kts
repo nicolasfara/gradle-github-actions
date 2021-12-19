@@ -33,7 +33,7 @@ repositories {
 val kotestVersion = "5.0.0.M3"
 
 dependencies {
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.13.1")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.1")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion") // for kotest framework
