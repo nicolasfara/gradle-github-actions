@@ -5,5 +5,5 @@ package gghactions.model
  * [matrix] TODO.
  */
 data class Matrix(
-    val matrix: Map<String, Any>
+    var matrix: MutableMap<String, Any>
 )
