@@ -16,8 +16,16 @@ class GradleGithubActionsPluginFunctionalTest : WordSpec({
         projectDir.resolve("settings.gradle.kts").writeText("")
         projectDir.resolve("build.gradle.kts").writeText(
             """
+                import gghactions.model.*
                 plugins {
                     id("gradle-github-actions")
+                }
+                
+                githubWorkflow {
+                    os = listOf("ubuntu-latest", "macos-latest")
+                    build {
+                        cli { name = "Hello world"; run = "echo hello world" }
+                    }
                 }
             """.trimIndent()
         )
