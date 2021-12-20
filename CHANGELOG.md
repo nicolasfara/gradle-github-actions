@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/nicolasfara/gradle-github-actions/compare/1.0.5...1.1.0) (2021-12-20)
+
+
+### Features
+
+* publish on maven central ([5aae9ed](https://github.com/nicolasfara/gradle-github-actions/commit/5aae9edb97f0c7823528b9d0824a95460ad785c2))
+
 ## [1.0.5](https://github.com/nicolasfara/gradle-github-actions/compare/1.0.4...1.0.5) (2021-12-20)
 
 
