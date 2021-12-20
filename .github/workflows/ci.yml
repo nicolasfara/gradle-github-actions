@@ -62,6 +62,8 @@ jobs:
     steps:
       - name: Fetch Sources
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PERSONAL_TOKEN }}
 
       - name: Setup Java
         uses: actions/setup-java@v2
@@ -70,6 +72,8 @@ jobs:
           java-version: 17
 
       - name: Publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
           npm install
           npx semantic-release

@@ -38,9 +38,17 @@ dependencies {
 gradlePlugin {
     // Define the plugin
     val plugin by plugins.creating {
+        displayName = "Github workflow plugin configurator"
+        description = "A simple plugin useful to configure a Github workflow inside the gradle file"
         id = "gradle-github-actions"
         implementationClass = "gghactions.GithubActionsPlugin"
     }
+}
+
+pluginBundle {
+    website = "https://github.com/nicolasfara/gradle-github-actions"
+    vcsUrl = "https://github.com/nicolasfara/gradle-github-actions"
+    tags = listOf("github-actions", "ci")
 }
 
 tasks.withType<Test> {
