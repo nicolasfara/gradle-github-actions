@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/nicolasfara/gradle-github-actions/compare/1.0.4...1.0.5) (2021-12-20)
+
+
+### Bug Fixes
+
+* add maven repository ([707a323](https://github.com/nicolasfara/gradle-github-actions/commit/707a32350f3bc9defbc2f3806085aceaf4401dc1))
+
 ## [1.0.4](https://github.com/nicolasfara/gradle-github-actions/compare/1.0.3...1.0.4) (2021-12-20)
 
 
