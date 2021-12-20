@@ -13,6 +13,9 @@ plugins {
     alias(libs.plugins.ktlint)
 }
 
+group = "it.nicolasfarabegoli"
+description = "Simple plugin to configure github workflows"
+
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
@@ -40,7 +43,7 @@ gradlePlugin {
     val plugin by plugins.creating {
         displayName = "Github workflow plugin configurator"
         description = "A simple plugin useful to configure a Github workflow inside the gradle file"
-        id = "it.nicolasfarabegoli.gradle-github-actions"
+        id = "$group.${project.name}"
         implementationClass = "gghactions.GithubActionsPlugin"
     }
 }
