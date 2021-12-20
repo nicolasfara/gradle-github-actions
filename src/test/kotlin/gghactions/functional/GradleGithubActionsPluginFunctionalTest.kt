@@ -1,9 +1,10 @@
 package gghactions.functional
 
 import io.kotest.core.spec.style.WordSpec
-import io.kotest.matchers.string.shouldContain
+import io.kotest.matchers.shouldBe
 import org.gradle.testkit.runner.GradleRunner
 import java.io.File
+import java.io.File.separator as SEP
 
 /**
  * A simple functional test for the 'gghactions.greeting' plugin.
@@ -35,7 +36,7 @@ class GradleGithubActionsPluginFunctionalTest : WordSpec({
         "greet" {
             setupTest()
             // Run the build
-            val result = GradleRunner.create()
+            GradleRunner.create()
                 .forwardOutput()
                 .withPluginClasspath()
                 .withArguments("githubWorkflowGenerate")
@@ -43,7 +44,7 @@ class GradleGithubActionsPluginFunctionalTest : WordSpec({
                 .build()
 
             // Verify the result
-            result.output shouldContain "test"
+            File("${projectDir.path}$SEP.github${SEP}workflows${SEP}build-publish.yml").exists() shouldBe true
         }
     }
 })
