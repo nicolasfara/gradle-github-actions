@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/nicolasfara/gradle-github-actions/compare/1.0.2...1.0.3) (2021-12-20)
+
+
+### Bug Fixes
+
+* add group and description ([0f4a8e7](https://github.com/nicolasfara/gradle-github-actions/commit/0f4a8e7b31cb0b8f958c2857d73197220c0a10c2))
+
 ## [1.0.2](https://github.com/nicolasfara/gradle-github-actions/compare/1.0.1...1.0.2) (2021-12-20)
 
 
