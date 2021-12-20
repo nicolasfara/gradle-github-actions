@@ -40,7 +40,7 @@ gradlePlugin {
     val plugin by plugins.creating {
         displayName = "Github workflow plugin configurator"
         description = "A simple plugin useful to configure a Github workflow inside the gradle file"
-        id = "gradle-github-actions"
+        id = "it.nicolasfarabegoli.gradle-github-actions"
         implementationClass = "gghactions.GithubActionsPlugin"
     }
 }
