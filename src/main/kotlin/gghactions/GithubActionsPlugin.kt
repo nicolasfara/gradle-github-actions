@@ -1,7 +1,5 @@
 package gghactions
 
-import gghactions.model.Job
-import gghactions.model.Workflow
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.Task
