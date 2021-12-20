@@ -3,6 +3,8 @@ plugins {
     // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
     `java-gradle-plugin`
     jacoco
+    `maven-publish`
+    signing
 
     // Apply the Kotlin JVM plugin to add support for Kotlin.
     alias(libs.plugins.kotlin.jvm)
@@ -15,6 +17,7 @@ plugins {
 
 group = "it.nicolasfarabegoli"
 description = "Simple plugin to configure github workflows"
+version = properties["version"] as String
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -49,14 +52,62 @@ gradlePlugin {
 }
 
 pluginBundle {
-    mavenCoordinates {
-        website = "https://github.com/nicolasfara/gradle-github-actions"
-        vcsUrl = "https://github.com/nicolasfara/gradle-github-actions"
-        tags = listOf("github-actions", "ci")
-        groupId = group
-        artifactId = project.name
-        version = project.properties["version"] as String
+    website = "https://github.com/nicolasfara/gradle-github-actions"
+    vcsUrl = "https://github.com/nicolasfara/gradle-github-actions"
+    tags = listOf("github-actions", "ci")
+}
+
+val javadocJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("javadoc")
+}
+
+publishing {
+    publications {
+        withType<MavenPublication> {
+            version = "${project.properties["version"]}"
+            artifact(javadocJar)
+
+            pom {
+                name.set("gradle-github-actions")
+                description.set("A simple plugin useful to configure a Github workflow inside the gradle file")
+                url.set("https://github.com/nicolasfara/gradle-github-actions")
+                licenses {
+                    license {
+                        name.set("Apache-2.0")
+                        url.set("https://www.apache.org/licenses/LICENSE-2.0")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("nicolasfara")
+                        name.set("Nicolas Farabegoli")
+                        email.set("nicolas.farabegoli@gmail.com")
+                    }
+                }
+                scm {
+                    url.set("https://github.com/nicolasfara/gradle-github-actions")
+                }
+            }
+        }
     }
+    repositories {
+        maven {
+            name = "sonatype"
+            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = System.getenv("OSSRH_USERNAME")
+                password = System.getenv("OSSRH_PASSWORD")
+            }
+        }
+    }
+}
+
+signing {
+    useInMemoryPgpKeys(
+        System.getenv("GPG_KEY"),
+        System.getenv("GPG_PASSPHRASE")
+    )
+    sign(publishing.publications)
 }
 
 tasks.withType<Test> {
