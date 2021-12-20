@@ -19,7 +19,7 @@ class GradleGithubActionsPluginFunctionalTest : WordSpec({
             """
                 import gghactions.model.*
                 plugins {
-                    id("gradle-github-actions")
+                    id("it.nicolasfarabegoli.gradle-github-actions")
                 }
                 
                 githubWorkflow {

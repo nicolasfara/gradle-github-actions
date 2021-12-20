@@ -12,7 +12,7 @@ class GradleGithubActionsPluginTest : WordSpec({
     "The plugin" should {
         "be registered" {
             val project = ProjectBuilder.builder().build()
-            project.plugins.apply("gradle-github-actions")
+            project.plugins.apply("it.nicolasfarabegoli.gradle-github-actions")
             // Verify the result
             project.tasks.findByName("githubWorkflowGenerate") shouldNotBe null
         }
