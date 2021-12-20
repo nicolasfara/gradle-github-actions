@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldNotBe
 import org.gradle.testfixtures.ProjectBuilder
 
 /**
- * A simple unit test for the 'gghactions.greeting' plugin.
+ * A simple unit test for the plugin.
  */
 class GradleGithubActionsPluginTest : WordSpec({
 

@@ -9,11 +9,10 @@ import org.gradle.api.Task
  *
  * ```kotlin
  * githubWorkflow {
- *      steps {
- *          command {
- *              run = "echo hello world"
- *          }
- *      }
+ *   os = listOf("ubuntu-latest", "macos-latest")
+ *   build {
+ *     cli { name = "Hello world"; run = "echo hello world" }
+ *   }
  * }
  * ```
  */

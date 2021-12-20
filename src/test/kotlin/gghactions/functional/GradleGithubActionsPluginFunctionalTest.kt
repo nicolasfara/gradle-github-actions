@@ -7,7 +7,7 @@ import java.io.File
 import java.io.File.separator as SEP
 
 /**
- * A simple functional test for the 'gghactions.greeting' plugin.
+ * A simple functional test for the plugin.
  */
 class GradleGithubActionsPluginFunctionalTest : WordSpec({
     val projectDir = File("build/functionalTest")
