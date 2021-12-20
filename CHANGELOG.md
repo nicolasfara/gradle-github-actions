@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/nicolasfara/gradle-github-actions/compare/1.0.0...1.0.1) (2021-12-20)
+
+
+### Bug Fixes
+
+* add group to build ([d5cf8a7](https://github.com/nicolasfara/gradle-github-actions/commit/d5cf8a74765d29ab1aae9f292e5058c8e5b13089))
+* update plugin id into tests ([2d4294f](https://github.com/nicolasfara/gradle-github-actions/commit/2d4294fc6e80721d01b82c1d1904cdebd786f373))
+
 # 1.0.0 (2021-12-20)
 
 
