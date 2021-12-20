@@ -13,6 +13,7 @@ import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import java.io.ByteArrayOutputStream
+import java.io.File
 
 /**
  * GithubActions generate workflow.
@@ -50,6 +51,12 @@ open class GithubActionsTask : DefaultTask() {
 
         val os = ByteArrayOutputStream()
         mapper.writeValue(os, workflow.get())
-        println(os.toString())
+
+        val directory = File(project.rootDir.path + File.separator + ".github/workflows")
+        if (!directory.exists()) {
+            directory.mkdirs()
+        }
+        val file = File(directory.path + File.separator + "build-publish.yml")
+        file.writeBytes(os.toByteArray())
     }
 }
