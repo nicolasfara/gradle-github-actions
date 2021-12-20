@@ -15,3 +15,7 @@ plugins:
     - assets:
       - gradle.properties
       - CHANGELOG.md
+  -
+    - "@semantic-release/exec"
+    - publishCmd: |
+        ./gradlew publishPluginMavenPublicationToSonatypeRepository || exit 1
