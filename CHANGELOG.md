@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/nicolasfara/gradle-github-actions/compare/1.0.3...1.0.4) (2021-12-20)
+
+
+### Bug Fixes
+
+* use maven coordinates ([820ffec](https://github.com/nicolasfara/gradle-github-actions/commit/820ffec578db4e7ffaa02eb12d46e2bc0091c2dd))
+
 ## [1.0.3](https://github.com/nicolasfara/gradle-github-actions/compare/1.0.2...1.0.3) (2021-12-20)
 
 
