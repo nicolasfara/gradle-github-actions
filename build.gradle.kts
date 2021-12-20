@@ -49,9 +49,14 @@ gradlePlugin {
 }
 
 pluginBundle {
-    website = "https://github.com/nicolasfara/gradle-github-actions"
-    vcsUrl = "https://github.com/nicolasfara/gradle-github-actions"
-    tags = listOf("github-actions", "ci")
+    mavenCoordinates {
+        website = "https://github.com/nicolasfara/gradle-github-actions"
+        vcsUrl = "https://github.com/nicolasfara/gradle-github-actions"
+        tags = listOf("github-actions", "ci")
+        groupId = group
+        artifactId = project.name
+        version = project.properties["version"] as String
+    }
 }
 
 tasks.withType<Test> {
