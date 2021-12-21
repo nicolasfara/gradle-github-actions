@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/nicolasfara/gradle-github-actions/compare/1.1.0...1.1.1) (2021-12-21)
+
+
+### Bug Fixes
+
+* add secrets as env to publish to maven central ([208ca88](https://github.com/nicolasfara/gradle-github-actions/commit/208ca8801303ff3b2c93658109c9d9ca3dc27df0))
+
 # [1.1.0](https://github.com/nicolasfara/gradle-github-actions/compare/1.0.5...1.1.0) (2021-12-20)
 
 
