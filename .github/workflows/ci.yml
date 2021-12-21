@@ -70,17 +70,17 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 17
-          server-id: ossrh
-          server-username: ${{ secrets.OSSRH_USERNAME }}
-          server-password: ${{ secrets.OSSRH_PASSWORD }}
-          gpg-private-key: ${{ secrets.GPG_KEY }}
-          gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Install npm packages
+        run: npm install
 
       - name: Publish
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
           GRADLE_PUBLISH_KEY: ${{ secrets.GRADLE_PUBLISH_KEY }}
           GRADLE_PUBLISH_SECRET: ${{ secrets.GRADLE_PUBLISH_SECRET }}
-        run: |
-          npm install
-          npx semantic-release
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          GPG_KEY: ${{ secrets.GPG_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: npx semantic-release
