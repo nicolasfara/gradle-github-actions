@@ -1,5 +1,5 @@
 [versions]
-kotlinVersion = "1.6.10"
+kotlinVersion = "1.6.21"
 kotestVersion = "5.4.2"
 ktlintVersion = "10.2.1"
 detektVersion = "1.21.0"
