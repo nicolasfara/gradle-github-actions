@@ -3,7 +3,7 @@ kotlinVersion = "1.7.21"
 kotestVersion = "5.5.4"
 ktlintVersion = "11.0.0"
 detektVersion = "1.21.0"
-jacksonVersion = "2.14.0"
+jacksonVersion = "2.14.1"
 
 [libraries]
 jacksonKotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jacksonVersion" }
