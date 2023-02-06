@@ -1,6 +1,6 @@
 [versions]
 kotlinVersion = "1.8.0"
-kotestVersion = "5.5.4"
+kotestVersion = "5.5.5"
 ktlintVersion = "11.1.0"
 detektVersion = "1.21.0"
 jacksonVersion = "2.14.2"
